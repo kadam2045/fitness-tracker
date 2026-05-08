@@ -1,5 +1,9 @@
 import { Navbar } from "@/components/landing/navbar";
 import { Hero } from "@/components/landing/hero";
+import { SocialProofSection } from "@/components/landing/social-proof-section";
+import { FeaturesSection } from "@/components/landing/features-section";
+import { HowItWorksSection } from "@/components/landing/how-it-works-section";
+import { TestimonialsSection } from "@/components/landing/testimonials-section";
 
 export default function Home() {
   return (
@@ -7,17 +11,13 @@ export default function Home() {
       <Navbar />
       <main className="flex-1">
         <Hero />
-        
-        {/* Placeholder for future sections */}
-        <section id="features" className="py-24 bg-muted/30">
-          <div className="container mx-auto px-6 text-center">
-            <h2 className="text-3xl font-bold mb-4 text-muted-foreground/50 italic underline">Features Section Coming Soon</h2>
-            <div className="h-96 border-2 border-dashed border-muted rounded-3xl" />
-          </div>
-        </section>
+        <SocialProofSection />
+        <FeaturesSection />
+        <HowItWorksSection />
+        <TestimonialsSection />
       </main>
       
-      {/* Basic Footer Placeholder */}
+      {/* Basic Footer Placeholder - to be updated in next phase */}
       <footer className="py-12 border-t border-border bg-background">
         <div className="container mx-auto px-6 text-center text-muted-foreground">
           <p>© 2026 FitTrack. Built for excellence.</p>
