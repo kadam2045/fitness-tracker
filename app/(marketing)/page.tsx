@@ -1,12 +1,12 @@
-import { Navbar } from "@/components/landing/navbar";
-import { Hero } from "@/components/landing/hero";
+import { LandingNavbar } from "@/components/landing/landing-navbar";
+import { HeroSection } from "@/components/landing/hero-section";
 
-export default function Home() {
+export default function LandingPage() {
   return (
     <div className="relative flex flex-col min-h-screen">
-      <Navbar />
+      <LandingNavbar />
       <main className="flex-1">
-        <Hero />
+        <HeroSection />
         
         {/* Placeholder for future sections */}
         <section id="features" className="py-24 bg-muted/30">
