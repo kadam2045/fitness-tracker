@@ -1,8 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Bell } from "lucide-react";
+import { Bell, LogOut } from "lucide-react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 interface DashboardHeaderProps {
   userName?: string;
@@ -32,8 +34,9 @@ export function DashboardHeader({
         </p>
       </div>
 
-      {/* Right section: notification + avatar */}
-      <div className="flex items-center gap-3">
+      {/* Right section: theme, notification + avatar */}
+      <div className="flex items-center gap-2 sm:gap-3">
+        <ThemeToggle />
         <Button
           variant="ghost"
           size="icon"
@@ -59,6 +62,16 @@ export function DashboardHeader({
             </span>
           )}
         </div>
+
+        <Link href="/" aria-label="Log out">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="rounded-xl text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+          >
+            <LogOut size={18} />
+          </Button>
+        </Link>
       </div>
     </motion.header>
   );

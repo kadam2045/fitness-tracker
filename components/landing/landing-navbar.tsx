@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { cn } from "@/lib/utils";
 import { MobileNavDrawer } from "./mobile-nav-drawer";
 
@@ -61,13 +62,15 @@ export function LandingNavbar() {
           </div>
 
           {/* Actions */}
-          <div className="flex items-center gap-4">
-            <div className="hidden md:flex items-center gap-4">
+          <div className="flex items-center gap-2 md:gap-4">
+            <ThemeToggle />
+            
+            <div className="hidden md:flex items-center">
               <Button variant="ghost" size="sm" asChild>
                 <Link href="/login">Login</Link>
               </Button>
             </div>
-            <Button size="sm" className="rounded-full px-6" asChild>
+            <Button size="sm" className="rounded-full px-4 md:px-6" asChild>
               <Link href="/onboarding">Get Started Free</Link>
             </Button>
             

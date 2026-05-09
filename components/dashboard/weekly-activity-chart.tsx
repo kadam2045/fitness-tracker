@@ -59,42 +59,56 @@ export function WeeklyActivityChart() {
         </h3>
       </div>
 
-      {/* Chart */}
+      {/* Chart or Empty State */}
       <div className="h-56 w-full">
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart
-            data={weeklyData}
-            margin={{ top: 5, right: 5, bottom: 5, left: -20 }}
-          >
-            <CartesianGrid
-              strokeDasharray="3 3"
-              vertical={false}
-              stroke="hsl(var(--border))"
-            />
-            <XAxis
-              dataKey="day"
-              axisLine={false}
-              tickLine={false}
-              tick={{ fontSize: 12, fill: "hsl(var(--muted-foreground))" }}
-            />
-            <YAxis
-              axisLine={false}
-              tickLine={false}
-              tick={{ fontSize: 12, fill: "hsl(var(--muted-foreground))" }}
-              tickFormatter={(v: number) => `${v}m`}
-            />
-            <Tooltip
-              content={<CustomTooltip />}
-              cursor={{ fill: "hsl(var(--muted))", radius: 6 }}
-            />
-            <Bar
-              dataKey="minutes"
-              fill="hsl(var(--primary))"
-              radius={[6, 6, 0, 0]}
-              maxBarSize={36}
-            />
-          </BarChart>
-        </ResponsiveContainer>
+        {weeklyData.length > 0 ? (
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart
+              data={weeklyData}
+              margin={{ top: 5, right: 5, bottom: 5, left: -20 }}
+            >
+              <CartesianGrid
+                strokeDasharray="3 3"
+                vertical={false}
+                stroke="hsl(var(--border))"
+              />
+              <XAxis
+                dataKey="day"
+                axisLine={false}
+                tickLine={false}
+                tick={{ fontSize: 12, fill: "hsl(var(--muted-foreground))" }}
+              />
+              <YAxis
+                axisLine={false}
+                tickLine={false}
+                tick={{ fontSize: 12, fill: "hsl(var(--muted-foreground))" }}
+                tickFormatter={(v: number) => `${v}m`}
+              />
+              <Tooltip
+                content={<CustomTooltip />}
+                cursor={{ fill: "hsl(var(--muted))", radius: 6 }}
+              />
+              <Bar
+                dataKey="minutes"
+                fill="hsl(var(--primary))"
+                radius={[6, 6, 0, 0]}
+                maxBarSize={36}
+              />
+            </BarChart>
+          </ResponsiveContainer>
+        ) : (
+          <div className="flex h-full w-full flex-col items-center justify-center text-center">
+            <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-muted">
+              <Activity className="h-6 w-6 text-muted-foreground" />
+            </div>
+            <h4 className="mb-1 text-sm font-medium text-foreground">
+              No activity yet
+            </h4>
+            <p className="text-xs text-muted-foreground">
+              Start tracking to see your weekly progress.
+            </p>
+          </div>
+        )}
       </div>
     </motion.div>
   );

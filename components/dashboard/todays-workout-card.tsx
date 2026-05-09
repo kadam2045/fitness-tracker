@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Dumbbell } from "lucide-react";
+import { Dumbbell, Plus } from "lucide-react";
 import { WorkoutItem } from "./workout-item";
+import { Button } from "@/components/ui/button";
 
 interface Exercise {
   id: string;
@@ -60,25 +61,43 @@ export function TodaysWorkoutCard() {
           className="h-full rounded-full bg-primary"
           initial={{ width: 0 }}
           animate={{
-            width: `${(completedCount / exercises.length) * 100}%`,
+            width: exercises.length > 0 ? `${(completedCount / exercises.length) * 100}%` : "0%",
           }}
           transition={{ duration: 0.5, ease: "easeOut" }}
         />
       </div>
 
-      {/* Exercise list */}
-      <div className="space-y-1">
-        {exercises.map((exercise, i) => (
-          <WorkoutItem
-            key={exercise.id}
-            name={exercise.name}
-            detail={exercise.detail}
-            completed={exercise.completed}
-            onToggle={() => toggleExercise(exercise.id)}
-            index={i}
-          />
-        ))}
-      </div>
+      {/* Exercise list or Empty State */}
+      {exercises.length > 0 ? (
+        <div className="space-y-1">
+          {exercises.map((exercise, i) => (
+            <WorkoutItem
+              key={exercise.id}
+              name={exercise.name}
+              detail={exercise.detail}
+              completed={exercise.completed}
+              onToggle={() => toggleExercise(exercise.id)}
+              index={i}
+            />
+          ))}
+        </div>
+      ) : (
+        <div className="flex flex-col items-center justify-center py-6 text-center">
+          <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-muted">
+            <Dumbbell className="h-6 w-6 text-muted-foreground" />
+          </div>
+          <h4 className="mb-1 text-sm font-medium text-foreground">
+            No workout planned
+          </h4>
+          <p className="mb-4 text-xs text-muted-foreground">
+            Take a rest day or log a new workout.
+          </p>
+          <Button variant="outline" size="sm" className="gap-2">
+            <Plus size={14} />
+            Log Workout
+          </Button>
+        </div>
+      )}
     </motion.div>
   );
 }
