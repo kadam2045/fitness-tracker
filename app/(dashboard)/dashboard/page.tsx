@@ -1,4 +1,3 @@
-import { DashboardLayout } from "@/components/dashboard/dashboard-layout";
 import { DashboardWidgets } from "@/components/dashboard/dashboard-widgets";
 
 export const metadata = {
@@ -8,9 +7,5 @@ export const metadata = {
 };
 
 export default function DashboardPage() {
-  return (
-    <DashboardLayout>
-      <DashboardWidgets />
-    </DashboardLayout>
-  );
+  return <DashboardWidgets />;
 }

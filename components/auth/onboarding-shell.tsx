@@ -14,7 +14,6 @@ import {
   step5Schema
 } from "@/lib/validations/onboarding";
 import { Form } from "../ui/form";
-import { OnboardingLayout } from "./onboarding-layout";
 import { OnboardingHeader } from "./onboarding-header";
 import { OnboardingProgress } from "./onboarding-progress";
 import { OnboardingNavigation } from "./onboarding-navigation";
@@ -135,7 +134,7 @@ export function OnboardingShell() {
   };
 
   return (
-    <OnboardingLayout>
+    <>
       <OnboardingHeader />
       
       {!isCompleted && (
@@ -178,6 +177,6 @@ export function OnboardingShell() {
           </motion.div>
         </AnimatePresence>
       </div>
-    </OnboardingLayout>
+    </>
   );
 }

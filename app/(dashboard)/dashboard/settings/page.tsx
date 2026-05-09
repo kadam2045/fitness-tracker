@@ -1,4 +1,3 @@
-import { DashboardLayout } from "@/components/dashboard/dashboard-layout";
 import { ComingSoonPlaceholder } from "@/components/dashboard/coming-soon-placeholder";
 
 export const metadata = {
@@ -8,12 +7,10 @@ export const metadata = {
 
 export default function SettingsPage() {
   return (
-    <DashboardLayout>
-      <ComingSoonPlaceholder
-        title="Settings"
-        description="Manage your account settings, notifications, and preferences."
-        icon="settings"
-      />
-    </DashboardLayout>
+    <ComingSoonPlaceholder
+      title="Settings"
+      description="Manage your account settings, notifications, and preferences."
+      icon="settings"
+    />
   );
 }
