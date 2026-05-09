@@ -63,7 +63,7 @@ export function DashboardHeader({
           )}
         </div>
 
-        <Link href="/" aria-label="Log out">
+        <Link href="/" aria-label="Log out" onClick={() => localStorage.removeItem("isAuthenticated")}>
           <Button
             variant="ghost"
             size="icon"
