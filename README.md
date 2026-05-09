@@ -17,11 +17,18 @@ The project includes:
 
 ---
 
-## Previews
+## App Gallery
 
-| Landing Page | Onboarding Flow |
+### Desktop Experience
+| Dashboard Overview | Onboarding Flow |
 | :---: | :---: |
-| ![Landing Page](./screenshot/FitTrack-Your-Personal-Fitness-Dashboard-05-09-2026_01_21_PM.png) | ![Onboarding](./screenshot/Onboarding-FitTrack-05-09-2026_01_23_PM.png) |
+| ![Dashboard](./screenshot/Dashboard-FitTrack-05-09-2026_01_24_PM.png) | ![Onboarding](./screenshot/Onboarding-FitTrack-05-09-2026_01_23_PM.png) |
+
+### Landing Page
+![Landing Page](./screenshot/FitTrack-Your-Personal-Fitness-Dashboard-05-09-2026_01_21_PM.png)
+
+### Mobile Responsive
+<img src="./screenshot/phone.png" width="300" alt="Mobile View" />
 
 ---
 
