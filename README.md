@@ -1,6 +1,6 @@
 # FitTrack - Personal Fitness Dashboard
 
-![FitTrack Dashboard](./screenshot/Dashboard-FitTrack-05-09-2026_01_24_PM.png)
+![FitTrack Main Page](./screenshot/mainPage.png)
 
 ## What We Built
 
