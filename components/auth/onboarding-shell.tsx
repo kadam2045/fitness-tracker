@@ -17,7 +17,7 @@ import { Form } from "../ui/form";
 import { OnboardingHeader } from "./onboarding-header";
 import { OnboardingProgress } from "./onboarding-progress";
 import { OnboardingNavigation } from "./onboarding-navigation";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/providers/auth-provider";
 
 // Step Components
 import { Step1CreateAccount } from "./steps/step-1-create-account";

@@ -5,7 +5,7 @@ import { StatsGrid } from "./stats-grid";
 import { TodaysWorkoutCard } from "./todays-workout-card";
 import { WeeklyActivityChart } from "./weekly-activity-chart";
 import { QuickActions } from "./quick-actions";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/providers/auth-provider";
 import api from "@/lib/api";
 import { DashboardLoading } from "@/components/dashboard/dashboard-loading";
 
