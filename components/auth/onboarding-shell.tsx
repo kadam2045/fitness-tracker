@@ -17,6 +17,7 @@ import { Form } from "../ui/form";
 import { OnboardingHeader } from "./onboarding-header";
 import { OnboardingProgress } from "./onboarding-progress";
 import { OnboardingNavigation } from "./onboarding-navigation";
+import { useAuth } from "@/context/AuthContext";
 
 // Step Components
 import { Step1CreateAccount } from "./steps/step-1-create-account";
@@ -40,6 +41,8 @@ export function OnboardingShell() {
   const [direction, setDirection] = React.useState(0);
   const [isCompleted, setIsCompleted] = React.useState(false);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const { register, updateOnboarding, user, loading } = useAuth();
+  const [error, setError] = React.useState<string | null>(null);
 
   const form = useForm<OnboardingData>({
     resolver: zodResolver(onboardingSchema),
@@ -62,16 +65,41 @@ export function OnboardingShell() {
   });
 
   const nextStep = async () => {
+    setError(null);
     // Validate current step before proceeding
     const fieldsToValidate = Object.keys(stepSchemas[currentStep - 1].shape) as (keyof OnboardingData)[];
     const isValid = await form.trigger(fieldsToValidate);
     
     if (isValid) {
-      if (currentStep < TOTAL_STEPS) {
-        setDirection(1);
-        setCurrentStep((prev) => prev + 1);
-      } else {
-        onSubmit(form.getValues());
+      try {
+        setIsSubmitting(true);
+        const values = form.getValues();
+
+        if (currentStep === 1) {
+          // Register user after Step 1
+          await register(values.fullName, values.email, values.password);
+        } else {
+          // Update user data after each step (except the last one which is handled by onSubmit)
+          if (currentStep < TOTAL_STEPS) {
+            const dataToUpdate: Partial<OnboardingData> = {};
+            fieldsToValidate.forEach(field => {
+              // @ts-ignore
+              dataToUpdate[field] = values[field];
+            });
+            await updateOnboarding(dataToUpdate);
+          }
+        }
+
+        if (currentStep < TOTAL_STEPS) {
+          setDirection(1);
+          setCurrentStep((prev) => prev + 1);
+        } else {
+          await onSubmit(values);
+        }
+      } catch (err: any) {
+        setError(err.response?.data?.message || err.message || "An error occurred");
+      } finally {
+        setIsSubmitting(false);
       }
     }
   };
@@ -83,7 +111,7 @@ export function OnboardingShell() {
     }
   };
 
-  const skipStep = () => {
+  const skipStep = async () => {
     if (currentStep === 4 || currentStep === 5) {
       setDirection(1);
       setCurrentStep((prev) => prev + 1);
@@ -91,12 +119,23 @@ export function OnboardingShell() {
   };
 
   const onSubmit = async (data: OnboardingData) => {
-    setIsSubmitting(true);
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    console.log("Onboarding Data:", data);
-    setIsSubmitting(false);
-    setIsCompleted(true);
+    try {
+      setIsSubmitting(true);
+      setError(null);
+      
+      // Final update
+      await updateOnboarding({
+        username: data.username,
+        bio: data.bio,
+        notificationPreferences: { notifications: data.notifications } as any
+      });
+
+      setIsCompleted(true);
+    } catch (err: any) {
+      setError(err.response?.data?.message || err.message || "An error occurred");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const stepVariants = {
@@ -139,6 +178,14 @@ export function OnboardingShell() {
       
       {!isCompleted && (
         <OnboardingProgress currentStep={currentStep} totalSteps={TOTAL_STEPS} />
+      )}
+
+      {error && (
+        <div className="mx-auto max-w-md px-6 py-2">
+          <div className="rounded-md bg-destructive/10 p-3 text-sm text-destructive">
+            {error}
+          </div>
+        </div>
       )}
 
       <div className="relative overflow-hidden min-h-[500px]">

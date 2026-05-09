@@ -35,10 +35,41 @@ const stats = [
   },
 ];
 
-export function StatsGrid() {
+export function StatsGrid({ stats: apiStats }: { stats?: any }) {
+  const displayStats = [
+    {
+      label: "Calories Burned",
+      value: apiStats?.caloriesBurned?.value?.toLocaleString() || "0",
+      icon: Flame,
+      trend: apiStats?.caloriesBurned?.trend ? `+${apiStats.caloriesBurned.trend}%` : "0%",
+      trendUp: true,
+    },
+    {
+      label: "Workouts This Week",
+      value: apiStats?.workoutsThisWeek?.value?.toString() || "0",
+      icon: Dumbbell,
+      trend: apiStats?.workoutsThisWeek?.trend ? `+${apiStats.workoutsThisWeek.trend}` : "0",
+      trendUp: true,
+    },
+    {
+      label: "Streak Days",
+      value: apiStats?.streakDays?.value?.toString() || "0",
+      icon: Zap,
+      trend: "🔥",
+      trendUp: true,
+    },
+    {
+      label: "Goal Progress",
+      value: apiStats?.goalProgress?.value ? `${apiStats.goalProgress.value}%` : "0%",
+      icon: Target,
+      trend: apiStats?.goalProgress?.trend ? `+${apiStats.goalProgress.trend}%` : "0%",
+      trendUp: true,
+    },
+  ];
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      {stats.map((stat, i) => (
+      {displayStats.map((stat, i) => (
         <StatCard key={stat.label} {...stat} index={i} />
       ))}
     </div>

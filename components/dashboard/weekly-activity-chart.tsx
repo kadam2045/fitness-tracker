@@ -41,7 +41,12 @@ function CustomTooltip({
   );
 }
 
-export function WeeklyActivityChart() {
+export function WeeklyActivityChart({ data: apiData }: { data?: any[] }) {
+  const chartData = apiData?.map(item => ({
+    day: item.day,
+    minutes: item.activeMinutes || 0
+  })) || [];
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -61,10 +66,10 @@ export function WeeklyActivityChart() {
 
       {/* Chart or Empty State */}
       <div className="h-56 w-full">
-        {weeklyData.length > 0 ? (
+        {chartData.length > 0 ? (
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
-              data={weeklyData}
+              data={chartData}
               margin={{ top: 5, right: 5, bottom: 5, left: -20 }}
             >
               <CartesianGrid

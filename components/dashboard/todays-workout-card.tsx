@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Dumbbell, Plus } from "lucide-react";
 import { WorkoutItem } from "./workout-item";
@@ -22,8 +22,21 @@ const initialExercises: Exercise[] = [
   { id: "5", name: "Plank Hold", detail: "3 × 45 sec", completed: true },
 ];
 
-export function TodaysWorkoutCard() {
-  const [exercises, setExercises] = useState<Exercise[]>(initialExercises);
+export function TodaysWorkoutCard({ workout: apiWorkout }: { workout?: any }) {
+  const [exercises, setExercises] = useState<Exercise[]>([]);
+
+  useEffect(() => {
+    if (apiWorkout?.exercises) {
+      setExercises(
+        apiWorkout.exercises.map((ex: any) => ({
+          id: ex.id,
+          name: ex.name,
+          detail: ex.sets || "",
+          completed: ex.completed,
+        }))
+      );
+    }
+  }, [apiWorkout]);
 
   const toggleExercise = (id: string) => {
     setExercises((prev) =>
