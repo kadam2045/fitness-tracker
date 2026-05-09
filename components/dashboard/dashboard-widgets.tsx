@@ -7,23 +7,31 @@ import { WeeklyActivityChart } from "./weekly-activity-chart";
 import { QuickActions } from "./quick-actions";
 import { useAuth } from "@/context/AuthContext";
 import api from "@/lib/api";
-import { DashboardLoading } from "./dashboard-loading";
+import { DashboardLoading } from "@/components/dashboard/dashboard-loading";
 
 export function DashboardWidgets() {
-  const { user } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchDashboardData = async () => {
-      if (!user?._id) return;
+      // Wait for auth to finish loading
+      if (authLoading) return;
+      
+      // If auth finished and no user, we can't fetch data
+      if (!user?._id) {
+        setLoading(false);
+        return;
+      }
       
       try {
         setLoading(true);
         const response = await api.get(`/dashboard/${user._id}`);
         setData(response.data);
       } catch (err: any) {
+        console.error("Dashboard Fetch Error:", err);
         setError(err.response?.data?.message || err.message || "Failed to load dashboard data");
       } finally {
         setLoading(false);
@@ -31,9 +39,9 @@ export function DashboardWidgets() {
     };
 
     fetchDashboardData();
-  }, [user?._id]);
+  }, [user?._id, authLoading]);
 
-  if (loading) return <DashboardLoading />;
+  if (authLoading || loading) return <DashboardLoading />;
 
   if (error) {
     return (
